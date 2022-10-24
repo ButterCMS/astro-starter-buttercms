@@ -1,0 +1,21 @@
+{
+  "name": "@example/basics",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^2.0.1",
+    "@astrojs/react": "^1.2.1",
+    "@types/react": "^18.0.22",
+    "astro": "^1.5.2",
+    "astro-seo": "^0.6.0",
+    "buttercms": "^1.2.9"
+  }
+}
