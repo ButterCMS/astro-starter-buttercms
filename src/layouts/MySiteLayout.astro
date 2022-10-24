@@ -1,0 +1,39 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ScrollToTop from "../components/ScrollToTop.astro";
+
+import "../css/bootstrap.min.css";
+import "../css/lineicons.css";
+import "../css/tiny-slider.css";
+import "../css/main.css";
+
+const { title } = Astro.props;
+---
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+</head>
+
+<body>
+    <>
+        <Header />
+        <slot />
+        <ScrollToTop />
+        <Footer />
+    </>
+
+    <!-- =================== JS All Templates ========================= -->
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/polyfill.js"></script>
+    <script src="../js/main.js"></script>
+
+    <!-- ================= JS Index HTML only ========================= -->
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/client-slider.js"></script>
+    <script src="../js/section-menu.js"></script>
+</body>

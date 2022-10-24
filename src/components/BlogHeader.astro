@@ -1,0 +1,26 @@
+---
+const { title, text, isVisible } = Astro.props;
+---
+
+<section id="blog-header" class="single-post-nav">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-12">
+				<div class="section-title text-center">
+					<h2>{title}</h2>
+					<ul class="breadcrumb-nav">
+						<li><a href="/">Home</a></li>
+						{
+							isVisible === "true" && (
+								<li>
+									<a href="/blog">Blog</a>
+								</li>
+							)
+						}
+						<li>{text}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

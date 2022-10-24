@@ -1,0 +1,22 @@
+---
+import { Debug } from "astro/components";
+import BlogHeader from "../../components/BlogHeader.astro";
+import BlogPost from "../../components/BlogPost.astro";
+import MySiteLayout from "../../layouts/MySiteLayout.astro";
+import { butterCMS } from "../../utils/buttercmssdk";
+
+const availableData = await butterCMS.post
+    .list({})
+    .then((r) => {
+        return r.data.data;
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+---
+
+<MySiteLayout>
+    <BlogHeader title="All Blog Posts" text="All blog posts" />
+    <BlogPost data={availableData} />
+    <Debug {availableData} />
+</MySiteLayout>

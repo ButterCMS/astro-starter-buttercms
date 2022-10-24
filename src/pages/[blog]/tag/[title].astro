@@ -1,0 +1,48 @@
+---
+import BlogHeader from "../../../components/BlogHeader.astro";
+import BlogPostDetail from "../../../components/BlogPostDetail.astro";
+import MySiteLayout from "../../../layouts/MySiteLayout.astro";
+import SEO from "../../SEOs.astro";
+import { butterCMS } from "../../../utils/buttercmssdk";
+
+const { pathname } = Astro.url;
+const urlQuery = pathname.split("/")[3];
+
+const availableData = await butterCMS.post
+    .list({ tag_slug: urlQuery })
+    .then((r) => {
+        return r.data.data;
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
+const entityName = await butterCMS.tag
+    .retrieve(urlQuery)
+    .then((r) => {
+        return r.data.data.name;
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
+const detail = availableData.filter((p) =>
+    p.tags.map((i) => i.slug === urlQuery)
+)[0];
+---
+
+<head>
+    <SEO
+        title={`Sample Blog - tag: ${entityName}`}
+        description={`Sample blog powered by ButterCMS, showing tag: ${entityName}`}
+    />
+</head>
+
+<MySiteLayout>
+    <BlogHeader
+        title="Blog Posts by Tag"
+        text={`Tag: ${entityName}`}
+        isVisible="true"
+    />
+    <BlogPostDetail post={detail} />
+</MySiteLayout>

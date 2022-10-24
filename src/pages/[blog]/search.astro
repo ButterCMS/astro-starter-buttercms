@@ -1,0 +1,16 @@
+---
+import SearchPage from "../../components/Searchpage";
+import MySiteLayout from "../../layouts/MySiteLayout.astro";
+import SEO from "../../pages/SEOs.astro";
+
+const { searchParams } = Astro.url;
+const params = Object.fromEntries(searchParams.entries());
+---
+
+<MySiteLayout>
+    <SEO
+        title={`Sample Blog - search results for ${params.q}`}
+        description={`ample blog powered by ButterCMS, showing search results for query: "<search ${params.q}>`}
+    />
+    <SearchPage client:load />
+</MySiteLayout>

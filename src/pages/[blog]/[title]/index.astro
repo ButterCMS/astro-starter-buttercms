@@ -1,0 +1,25 @@
+---
+import BlogHeader from "../../../components/BlogHeader.astro";
+import BlogPostDetail from "../../../components/BlogPostDetail.astro";
+import MySiteLayout from "../../../layouts/MySiteLayout.astro";
+import { butterCMS } from "../../../utils/buttercmssdk";
+
+const { pathname } = Astro.url;
+const urlQuery = pathname.split("/")[2];
+
+const availableData = await butterCMS.post
+    .list({})
+    .then((r) => {
+        return r.data.data;
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
+const detail = availableData.filter((p) => p.slug === urlQuery)[0];
+---
+
+<MySiteLayout>
+    <BlogHeader title={detail?.title} text={detail?.title} isVisible="true" />
+    <BlogPostDetail post={detail} />
+</MySiteLayout>
