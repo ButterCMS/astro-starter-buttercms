@@ -10,7 +10,7 @@ const params = Object.fromEntries(searchParams.entries());
 <MySiteLayout>
     <SEO
         title={`Sample Blog - search results for ${params.q}`}
-        description={`ample blog powered by ButterCMS, showing search results for query: "<search ${params.q}>`}
+        description={`Sample blog powered by ButterCMS, showing search results for query: ${params.q}`}
     />
     <SearchPage client:load />
 </MySiteLayout>

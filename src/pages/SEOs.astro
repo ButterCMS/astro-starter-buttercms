@@ -1,7 +1,7 @@
 ---
-import { SEO } from "astro-seo";
+import { SEOMetadata } from "astro-seo-metadata";
 
-const { title, description } = Astro.props;
+const { title, description, featured_image } = Astro.props;
 ---
 
-<SEO title={title} description={description} />
+<SEOMetadata title={title} description={description} image={featured_image} />

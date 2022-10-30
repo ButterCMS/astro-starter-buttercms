@@ -1,5 +1,4 @@
 ---
-import { Debug } from "astro/components";
 import BlogHeader from "../../components/BlogHeader.astro";
 import BlogPost from "../../components/BlogPost.astro";
 import MySiteLayout from "../../layouts/MySiteLayout.astro";
@@ -18,5 +17,4 @@ const availableData = await butterCMS.post
 <MySiteLayout>
     <BlogHeader title="All Blog Posts" text="All blog posts" />
     <BlogPost data={availableData} />
-    <Debug {availableData} />
 </MySiteLayout>

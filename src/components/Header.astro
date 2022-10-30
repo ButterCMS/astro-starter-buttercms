@@ -6,7 +6,7 @@ const menuItems = items.data.data.navigation_menu[0].menu_items;
 ---
 
 <header id="header">
-  <div class={`navbar-area ${true && "sticky"}`}>
+  <div class={`navbar-area ${false && "sticky"}`}>
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-12">
@@ -33,7 +33,9 @@ const menuItems = items.data.data.navigation_menu[0].menu_items;
             </button>
 
             <div
-              class="collapse navbar-collapse sub-menu-bar show"
+              class={`collapse navbar-collapse sub-menu-bar ${
+                false ? "show" : ""
+              }`}
               id="navbarSupportedContent"
             >
               <div class="ms-auto">
@@ -41,7 +43,7 @@ const menuItems = items.data.data.navigation_menu[0].menu_items;
                   {
                     menuItems.map(({ label, url }) => (
                       <li class="nav-item">
-                        <a class="page-scroll active" href={`/${url}`}>
+                        <a class="page-scroll " href={`/${url}`}>
                           {label}
                         </a>
                       </li>

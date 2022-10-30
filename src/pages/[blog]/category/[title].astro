@@ -1,9 +1,10 @@
 ---
 import BlogHeader from "../../../components/BlogHeader.astro";
-import BlogPostDetail from "../../../components/BlogPostDetail.astro";
 import MySiteLayout from "../../../layouts/MySiteLayout.astro";
 import SEO from "../../SEOs.astro";
 import { butterCMS } from "../../../utils/buttercmssdk";
+import BlogPost from "../../../components/BlogPost.astro";
+import NotFoundSection from "../../../components/NotFoundSection";
 
 const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[3];
@@ -26,23 +27,27 @@ const entityName = await butterCMS.category
         return console.log(err);
     });
 
-const detail = availableData.filter((p) =>
-    p.categories.map((i) => i.slug === urlQuery)
-)[0];
+const isDataAvailable = availableData == null || availableData.length > 0;
 ---
 
-<head>
-    <SEO
-        title={`Sample Blog - category: ${entityName}`}
-        description={`Sample blog powered by ButterCMS, showing category ${entityName}`}
-    />
-</head>
+{
+    isDataAvailable ? (
+        <>
+            <SEO
+                title={`Sample Blog - category: ${entityName}`}
+                description={`Sample blog powered by ButterCMS, showing category: ${entityName}`}
+            />
 
-<MySiteLayout>
-    <BlogHeader
-        text={`Category: ${entityName}`}
-        title="Blog Posts by Category"
-        isVisible="true"
-    />
-    <BlogPostDetail post={detail} />
-</MySiteLayout>
+            <MySiteLayout>
+                <BlogHeader
+                    text={`Category: ${entityName}`}
+                    title="Blog Posts by Category"
+                    isVisible="true"
+                />
+                <BlogPost data={availableData} />
+            </MySiteLayout>
+        </>
+    ) : (
+        <NotFoundSection client:load />
+    )
+}

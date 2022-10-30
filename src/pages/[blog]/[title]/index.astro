@@ -1,8 +1,10 @@
 ---
 import BlogHeader from "../../../components/BlogHeader.astro";
 import BlogPostDetail from "../../../components/BlogPostDetail.astro";
+import NotFoundSection from "../../../components/NotFoundSection";
 import MySiteLayout from "../../../layouts/MySiteLayout.astro";
 import { butterCMS } from "../../../utils/buttercmssdk";
+import SEO from "../../../pages/SEOs.astro";
 
 const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[2];
@@ -19,7 +21,23 @@ const availableData = await butterCMS.post
 const detail = availableData.filter((p) => p.slug === urlQuery)[0];
 ---
 
-<MySiteLayout>
-    <BlogHeader title={detail?.title} text={detail?.title} isVisible="true" />
-    <BlogPostDetail post={detail} />
-</MySiteLayout>
+<SEO
+    title={detail.title}
+    description={detail.meta_description}
+    image={detail.featured_image}
+/>
+
+{
+    detail ? (
+        <MySiteLayout>
+            <BlogHeader
+                title={detail.title}
+                text={detail.title}
+                isVisible="true"
+            />
+            <BlogPostDetail post={detail} />
+        </MySiteLayout>
+    ) : (
+        <NotFoundSection client:load />
+    )
+}

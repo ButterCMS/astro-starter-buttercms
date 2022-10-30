@@ -12,12 +12,10 @@
     }
 
 
-    /*=====================================
-    Sticky
-    ======================================= */
     window.onscroll = function () {
         var header_navbar = document.querySelector(".navbar-area");
         var sticky = header_navbar.offsetTop;
+        header_navbar.classList.remove("sticky");
 
         if (window.pageYOffset > sticky) {
             header_navbar.classList.add("sticky");
@@ -33,6 +31,7 @@
             backToTo.style.display = "none";
         }
     };
+
 
     // Get the navbar
 

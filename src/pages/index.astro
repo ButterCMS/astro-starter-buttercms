@@ -17,7 +17,7 @@ const data = await butterCMS.page
 		return r.data.data;
 	})
 	.catch((err) => {
-		console.log(err);
+		console.log(err, "err");
 	});
 
 const posts = await butterCMS.post.list({ page: 1, page_size: 2 });
@@ -26,10 +26,15 @@ const sectionData = data.fields.body;
 const blogPosts = posts.data.data;
 ---
 
-<head>
-	<SEO {...data.fields.seo} />
-</head>
+<script>
+	if (!import.meta.env.PUBLIC_APITOKEN) {
+		window.location.assign("/404");
+	}
+</script>
+
 <MySiteLayout>
+	<SEO {...data.fields.seo} />
+
 	{
 		sectionData.map((i) => {
 			switch (i.type) {
@@ -48,6 +53,5 @@ const blogPosts = posts.data.data;
 			}
 		})
 	}
-
 	<BlogSection blogPosts={blogPosts} />
 </MySiteLayout>
