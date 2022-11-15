@@ -10,44 +10,44 @@ const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[3];
 
 const availableData = await butterCMS.post
-    .list({ tag_slug: urlQuery })
-    .then((r) => {
-        return r.data.data;
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+  .list({ tag_slug: urlQuery })
+  .then((r) => {
+    return r.data.data;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const entityName = await butterCMS.tag
-    .retrieve(urlQuery)
-    .then((r) => {
-        return r.data.data.name;
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+  .retrieve(urlQuery)
+  .then((r) => {
+    return r.data.data.name;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const isDataAvailable = availableData == null || availableData.length > 0;
 ---
 
 {
-    isDataAvailable ? (
-        <>
-            <SEO
-                title={`Sample Blog - tag: ${entityName}`}
-                description={`Sample blog powered by ButterCMS, showing tag: ${entityName}`}
-            />
+  isDataAvailable ? (
+    <>
+      <SEO
+        title={`Sample Blog - tag: ${entityName}`}
+        description={`Sample blog powered by ButterCMS, showing tag: ${entityName}`}
+      />
 
-            <MySiteLayout>
-                <BlogHeader
-                    title="Blog Posts by Tag"
-                    text={`Tag: ${entityName}`}
-                    isVisible="true"
-                />
-                <BlogPost data={availableData} />
-            </MySiteLayout>
-        </>
-    ) : (
-        <NotFoundSection client:load />
-    )
+      <MySiteLayout>
+        <BlogHeader
+          title="Blog Posts by Tag"
+          text={`Tag: ${entityName}`}
+          isVisible="true"
+        />
+        <BlogPost data={availableData} />
+      </MySiteLayout>
+    </>
+  ) : (
+    <NotFoundSection client:load />
+  )
 }

@@ -6,12 +6,9 @@ import ScrollToTop from "../components/ScrollToTop.astro";
 import "../css/bootstrap.min.css";
 import "../css/lineicons.css";
 import "../css/main.css";
+import NoApiTokenSection from "../components/NoApiTokenSection";
 
 const { title } = Astro.props;
-
-if (!import.meta.env.PUBLIC_APITOKEN) {
-    return Astro.redirect("404");
-}
 ---
 
 <!DOCTYPE html>
@@ -29,12 +26,18 @@ if (!import.meta.env.PUBLIC_APITOKEN) {
     </head>
 
     <body>
-        <>
-            <Header />
-            <slot />
-            <ScrollToTop />
-            <Footer />
-        </>
+        {
+            !import.meta.env.PUBLIC_APITOKEN ? (
+                <NoApiTokenSection client:load />
+            ) : (
+                <>
+                    <Header />
+                    <slot />
+                    <ScrollToTop />
+                    <Footer />
+                </>
+            )
+        }
 
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/polyfill.js"></script>

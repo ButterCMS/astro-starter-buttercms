@@ -7,23 +7,23 @@ import BlogHeader from "../components/BlogHeader.astro";
 import { butterCMS } from "../utils/buttercmssdk";
 
 const data = await butterCMS.post
-    .list({})
-    .then((r) => {
-        return r.data.data;
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+  .list({})
+  .then((r) => {
+    return r.data.data;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ---
 
 <head>
-    <SEO
-        title={`Sample Blog - all posts`}
-        description={`Sample blog powered by ButterCMS, showing all posts`}
-    />
+  <SEO
+    title={`Sample Blog - all posts`}
+    description={`Sample blog powered by ButterCMS, showing all posts`}
+  />
 </head>
 
 <MySiteLayout>
-    <BlogHeader title="All Blog Posts" text="All Blog Posts" />
-    <BlogPost data={data} />
+  <BlogHeader title="All Blog Posts" text="All Blog Posts" />
+  <BlogPost data={data} />
 </MySiteLayout>

@@ -7,109 +7,81 @@ const { data } = Astro.props;
 ---
 
 {
-	!data ? (
-		<Spinner client:load />
-	) : (
-		<section class="blog-posts">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-12 col-lg-8 blog-roll-cards">
-						<div class="row">
-							{data.map((post) => {
-								return (
-									<div class="col-12 col-lg-6">
-										<div class="blog-roll-card">
-											<div class="blog-roll-card-meta">
-												<h2 class="blog-roll-card-header">
-													<a
-														href={`/blog/${post.slug}`}
-													>
-														{post.title}
-													</a>
-												</h2>
-												<ul class="blog-roll-card-meta-info">
-													<li>
-														<a href="#">
-															<img
-																src={
-																	post.author
-																		.profile_image ||
-																	placeholder
-																}
-																alt="#"
-															/>
-															{
-																post.author
-																	.first_name
-															}{" "}
-															{
-																post.author
-																	.last_name
-															}
-														</a>
-													</li>
-													<li>
-														<a href="javascript:void(0)">
-															<i class="lni lni-calendar" />{" "}
-															{new Date(
-																post.published
-															).toLocaleString()}
-														</a>
-													</li>
-													<li>
-														{post.tags.map(
-															(tag) => {
-																return (
-																	<a
-																		href={`/blog/tag/${tag.slug}`}
-																	>
-																		<i class="lni lni-tag" />{" "}
-																		{
-																			tag.name
-																		}{" "}
-																	</a>
-																);
-															}
-														)}
-													</li>
-												</ul>
-											</div>
+  !data ? (
+    <Spinner client:load />
+  ) : (
+    <section class="blog-posts">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-8 blog-roll-cards">
+            <div class="row">
+              {data.map((post) => {
+                return (
+                  <div class="col-12 col-lg-6">
+                    <div class="blog-roll-card">
+                      <div class="blog-roll-card-meta">
+                        <h2 class="blog-roll-card-header">
+                          <a href={`/blog/${post.slug}`}>{post.title}</a>
+                        </h2>
+                        <ul class="blog-roll-card-meta-info">
+                          <li>
+                            <a href="#">
+                              <img
+                                src={post.author.profile_image || placeholder}
+                                alt="#"
+                              />
+                              {post.author.first_name} {post.author.last_name}
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0)">
+                              <i class="lni lni-calendar" />{" "}
+                              {new Date(post.published).toLocaleString()}
+                            </a>
+                          </li>
+                          <li>
+                            {post.tags.map((tag) => {
+                              return (
+                                <a href={`/blog/tag/${tag.slug}`}>
+                                  <i class="lni lni-tag" /> {tag.name}{" "}
+                                </a>
+                              );
+                            })}
+                          </li>
+                        </ul>
+                      </div>
 
-											{post.featured_image && (
-												<div class="single-post-thumbnail">
-													<img
-														src={
-															post.featured_image
-														}
-														alt={
-															post.featured_image_alt
-														}
-													/>
-												</div>
-											)}
+                      {post.featured_image && (
+                        <div class="single-post-thumbnail">
+                          <img
+                            src={post.featured_image}
+                            alt={post.featured_image_alt}
+                          />
+                        </div>
+                      )}
 
-											<div class="blog-roll-card-body">
-												<p>{post.summary}</p>
-											</div>
-											<div class="blog-roll-card-footer text-center">
-												<a
-													href={`/blog/${post.slug}`}
-													class="main-btn btn-hover"
-												>
-													Read More
-												</a>
-											</div>
-										</div>
-									</div>
-								);
-							})}
-						</div>
-					</div>
-					<aside class="col-12 col-lg-4">
-						<BlogWidget />
-					</aside>
-				</div>
-			</div>
-		</section>
-	)
+                      <div class="blog-roll-card-body">
+                        <p>{post.summary}</p>
+                      </div>
+                      <div class="blog-roll-card-footer text-center">
+                        <a
+                          href={`/blog/${post.slug}`}
+                          class="main-btn btn-hover"
+                        >
+                          Read More
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <aside class="col-12 col-lg-4">
+            <BlogWidget />
+          </aside>
+        </div>
+      </div>
+    </section>
+  )
 }

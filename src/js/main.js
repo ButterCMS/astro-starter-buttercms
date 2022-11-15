@@ -5,10 +5,15 @@
     window.onload = function () {
         window.setTimeout(fadeout, 500);
     }
+    const preloader = document.querySelector('.preloader')
 
     function fadeout() {
-        document.querySelector('.preloader').style.opacity = '0';
-        document.querySelector('.preloader').style.display = 'none';
+
+        if (preloader) {
+            preloader.style.opacity = '0';
+            preloader.style.display = 'none';
+        }
+
     }
 
 

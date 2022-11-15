@@ -10,34 +10,30 @@ const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[2];
 
 const availableData = await butterCMS.post
-    .list({})
-    .then((r) => {
-        return r.data.data;
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+  .list({})
+  .then((r) => {
+    return r.data.data;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const detail = availableData.filter((p) => p.slug === urlQuery)[0];
 ---
 
 <SEO
-    title={detail.title}
-    description={detail.meta_description}
-    image={detail.featured_image}
+  title={detail.title}
+  description={detail.meta_description}
+  image={detail.featured_image}
 />
 
 {
-    detail ? (
-        <MySiteLayout>
-            <BlogHeader
-                title={detail.title}
-                text={detail.title}
-                isVisible="true"
-            />
-            <BlogPostDetail post={detail} />
-        </MySiteLayout>
-    ) : (
-        <NotFoundSection client:load />
-    )
+  detail ? (
+    <MySiteLayout>
+      <BlogHeader title={detail.title} text={detail.title} isVisible="true" />
+      <BlogPostDetail post={detail} />
+    </MySiteLayout>
+  ) : (
+    <NotFoundSection client:load />
+  )
 }
