@@ -1,16 +1,169 @@
 ---
-import SearchPage from "../../components/Searchpage";
+import Spinner from "../../components/Spinner";
 import MySiteLayout from "../../layouts/MySiteLayout.astro";
-import SEO from "../../pages/SEOs.astro";
+import { butterCMS } from "../../utils/buttercmssdk";
+import placeholder from "../images/placeholder.png";
 
 const { searchParams } = Astro.url;
 const params = Object.fromEntries(searchParams.entries());
+
+let availableData = null;
+
+try {
+  const searchData = await butterCMS.post.search(params.q);
+  availableData = searchData.data.data;
+} catch (err) {
+  availableData = err?.response?.status;
+}
+
+let categories = null;
+
+try {
+  const categoryData = await butterCMS.category.list();
+
+  categories = categoryData.data.data;
+} catch (err) {
+  categories = err?.response?.status;
+}
 ---
 
-<MySiteLayout>
-  <SEO
-    title={`Sample Blog - search results for ${params.q}`}
-    description={`Sample blog powered by ButterCMS, showing search results for query: ${params.q}`}
-  />
-  <SearchPage client:load />
+<MySiteLayout
+  error={availableData === 401}
+  title={`Sample Blog - search results for ${params.q}`}
+  description={`Sample blog powered by ButterCMS, showing search results for query: ${params.q}.`}
+>
+  <section id="blog-header" class="single-post-nav">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="section-title text-center">
+            <h2>Search Results</h2>
+            <ul class="breadcrumb-nav">
+              <li><a href="/">Home</a></li>
+              <li>
+                <a href="/blog">Blog</a>
+              </li>
+              <li>Search: {params.q}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="blog-posts">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 blog-roll-cards">
+          <div class="row">
+            <>
+              {
+                !availableData ? (
+                  <Spinner client:load />
+                ) : availableData.length === 0 ? (
+                  <div>No blog posts found matching this query.</div>
+                ) : (
+                  <>
+                    {availableData.map((post) => {
+                      return (
+                        <div class="col-12 col-lg-6">
+                          <div class="blog-roll-card">
+                            <div class="blog-roll-card-meta">
+                              <h2 class="blog-roll-card-header">
+                                <a href="#">{post.title}</a>
+                              </h2>
+                              <ul class="blog-roll-card-meta-info">
+                                <li>
+                                  <a href="#">
+                                    <img
+                                      src={
+                                        post.author.profile_image || placeholder
+                                      }
+                                      alt="#"
+                                    />
+                                    {post.author.first_name}{" "}
+                                    {post.author.last_name}
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#">
+                                    <i class="lni lni-calendar" />{" "}
+                                    {new Date(post.published).toLocaleString()}
+                                  </a>
+                                </li>
+                                <li>
+                                  {post.tags.map((tag) => {
+                                    return (
+                                      <a href={`/blog/tag/${tag.slug}`}>
+                                        <i class="lni lni-tag" /> {tag.name}{" "}
+                                      </a>
+                                    );
+                                  })}
+                                </li>
+                              </ul>
+                            </div>
+
+                            {post.featured_image && (
+                              <div class="single-post-thumbnail">
+                                <img
+                                  src={post.featured_image}
+                                  alt={post.featured_image_alt}
+                                />
+                              </div>
+                            )}
+
+                            <div class="blog-roll-card-body">
+                              <p>{post.summary}</p>
+                            </div>
+                            <div class="blog-roll-card-footer text-center">
+                              <a
+                                href={`/blog/${post.slug}`}
+                                class="main-btn btn-hover"
+                              >
+                                Read More
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                )
+              }
+            </>
+          </div>
+        </div>
+
+        <aside class="col-12 col-lg-4">
+          <div class="sidebar blog-grid-page">
+            <div class="widget search-widget">
+              <h5 class="widget-title">Search This Site</h5>
+              <form action={`/blog/search`} method="get">
+                <input type="text" name="q" placeholder="Search Here..." />
+                <button type="submit"
+                  ><i class="lni lni-search-alt"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="widget categories-widget">
+            <h5 class="widget-title">Categories</h5>
+            <ul class="categories-list">
+              {
+                categories.map((category) => {
+                  return (
+                    <li>
+                      <a href={`/blog/category/${category.slug}`}>
+                        {category.name}
+                      </a>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 </MySiteLayout>

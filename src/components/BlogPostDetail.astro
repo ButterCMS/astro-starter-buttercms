@@ -2,72 +2,68 @@
 import BlogWidget from "./BlogWidget.astro";
 import placeholder from "../images/placeholder.png";
 import Spinner from "./Spinner";
-import SEO from "../pages/SEOs.astro";
 
 const { post } = Astro.props;
 ---
 
-<SEO
-  title={post.title}
-  description={post.meta_description}
-  image={post.featured_image}
-/>
-
 {
-  post ? (
-    <section class="blog-post">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 col-md-12 col-12">
-            <div class="single-post">
-              <div class="single-post-meta">
-                <h2 class="single-post-header">{post.title}</h2>
-                <ul class="single-post-meta-info">
-                  <li>
-                    <a href="javascript:void(0)">
-                      <img
-                        src={post.author.profile_image || placeholder}
-                        alt="#"
-                      />
-                      {post.author.first_name} {post.author.last_name}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">
-                      <i class="lni lni-calendar" />
-                      {new Date(post?.published).toLocaleString()}
-                    </a>
-                  </li>
-                  <li>
-                    {post?.tags.map((tag) => {
-                      return (
-                        <a href={`/blog/tag/${tag.slug}`}>
-                          <i class="lni lni-tag" /> {tag?.name}{" "}
-                        </a>
-                      );
-                    })}
-                  </li>
-                </ul>
-              </div>
-              {post?.featured_image && (
-                <div class="single-post-thumbnail">
-                  <img
-                    src={post.featured_image}
-                    alt={post.featured_image_alt}
-                  />
-                </div>
-              )}
-              <div class="single-post-body" set:html={post.body} />
-            </div>
-          </div>
-
-          <aside class="col-lg-4 col-md-12 col-12">
-            <BlogWidget post={post} />
-          </aside>
-        </div>
-      </div>
-    </section>
-  ) : (
+  !post ? (
     <Spinner client:load />
+  ) : (
+    <>
+      <section class="blog-post">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12 col-12">
+              <div class="single-post">
+                <div class="single-post-meta">
+                  <h2 class="single-post-header">{post.title}</h2>
+                  <ul class="single-post-meta-info">
+                    <li>
+                      <a href="#">
+                        <img
+                          src={post.author?.profile_image || placeholder}
+                          alt="#"
+                        />
+                        {post.author?.first_name}
+                        {post.author?.last_name}
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="lni lni-calendar" />
+                        {new Date(post?.published).toLocaleString()}
+                      </a>
+                    </li>
+                    <li>
+                      {post.tags?.map((tag) => {
+                        return (
+                          <a href={`/blog/tag/${tag.slug}`}>
+                            <i class="lni lni-tag" /> {tag?.name}{" "}
+                          </a>
+                        );
+                      })}
+                    </li>
+                  </ul>
+                </div>
+                {post?.featured_image && (
+                  <div class="single-post-thumbnail">
+                    <img
+                      src={post.featured_image}
+                      alt={post.featured_image_alt}
+                    />
+                  </div>
+                )}
+                <div class="single-post-body" set:html={post.body} />
+              </div>
+            </div>
+
+            <aside class="col-lg-4 col-md-12 col-12">
+              <BlogWidget post={post} />
+            </aside>
+          </div>
+        </div>
+      </section>
+    </>
   )
 }

@@ -12,13 +12,16 @@
 			const val = currLinkHref.replace("/", "");
 			const refElement = document.querySelector(val);
 			const scrollTopMinus = scrollPos + 73;
+
 			if (
-				refElement.offsetTop <= scrollTopMinus &&
-				refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
+				refElement && refElement.offsetTop <= scrollTopMinus &&
+				refElement && refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
 			) {
 				document.querySelector(".page-scroll").classList.remove("active");
 				currLink.classList.add("active");
-			} else {
+			}
+
+			else {
 				currLink.classList.remove("active");
 			}
 		}

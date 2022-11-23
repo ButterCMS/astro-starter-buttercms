@@ -1,53 +1,42 @@
 ---
 import BlogHeader from "../../../components/BlogHeader.astro";
 import MySiteLayout from "../../../layouts/MySiteLayout.astro";
-import SEO from "../../SEOs.astro";
 import { butterCMS } from "../../../utils/buttercmssdk";
 import BlogPost from "../../../components/BlogPost.astro";
-import NotFoundSection from "../../../components/NotFoundSection";
 
 const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[3];
 
-const availableData = await butterCMS.post
-  .list({ tag_slug: urlQuery })
-  .then((r) => {
-    return r.data.data;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+let availableData = null;
 
-const entityName = await butterCMS.tag
-  .retrieve(urlQuery)
-  .then((r) => {
-    return r.data.data.name;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+try {
+  const tagData = await butterCMS.post.list({ tag_slug: urlQuery });
 
-const isDataAvailable = availableData == null || availableData.length > 0;
+  availableData = tagData.data.data;
+} catch (err) {
+  availableData = err?.response?.status;
+}
+
+let entityName = null;
+
+try {
+  const tagDetail = await butterCMS.tag.retrieve(urlQuery);
+
+  entityName = tagDetail.data.data;
+} catch (err) {
+  entityName = err?.response?.status;
+}
 ---
 
-{
-  isDataAvailable ? (
-    <>
-      <SEO
-        title={`Sample Blog - tag: ${entityName}`}
-        description={`Sample blog powered by ButterCMS, showing tag: ${entityName}`}
-      />
-
-      <MySiteLayout>
-        <BlogHeader
-          title="Blog Posts by Tag"
-          text={`Tag: ${entityName}`}
-          isVisible="true"
-        />
-        <BlogPost data={availableData} />
-      </MySiteLayout>
-    </>
-  ) : (
-    <NotFoundSection client:load />
-  )
-}
+<MySiteLayout
+  error={availableData === 401 || entityName === 401}
+  title={`Sample Blog - tag: ${entityName?.name}`}
+  description={`Sample blog powered by ButterCMS, showing tag: ${entityName?.name}.`}
+>
+  <BlogHeader
+    title="Blog Posts by Tag"
+    text={`Tag: ${entityName.name}`}
+    isVisible="true"
+  />
+  <BlogPost data={availableData} />
+</MySiteLayout>

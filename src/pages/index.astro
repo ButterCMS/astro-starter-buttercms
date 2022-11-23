@@ -5,38 +5,37 @@ import FeatureSection from "../components/FeatureSection.astro";
 import TestimonialSection from "../components/TestimonialSection.astro";
 import BlogSection from "../components/BlogSection.astro";
 import MySiteLayout from "../layouts/MySiteLayout.astro";
-import SEO from "./SEOs.astro";
 import { butterCMS } from "../utils/buttercmssdk";
 
 const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[2];
 
-const data = await butterCMS.page
-  .retrieve("landing-page", urlQuery || "landing-page-with-components")
-  .then((r) => {
-    return r.data.data;
-  })
-  .catch((err) => {
-    console.log(err, "err");
-  });
+let data = null;
 
-const posts = await butterCMS.post.list({ page: 1, page_size: 2 });
+try {
+  const blockData = await butterCMS.page.retrieve(
+    "landing-page",
+    urlQuery || "landing-page-with-components"
+  );
 
-const sectionData = data.fields.body;
-const blogPosts = posts.data.data;
+  data = blockData.data.data;
+} catch (err) {
+  data = err?.response?.status;
+}
+
+let posts = null;
+
+try {
+  const postList = await butterCMS.post.list({ page: 1, page_size: 2 });
+  posts = postList.data.data;
+} catch (err) {
+  posts = err?.response?.status;
+}
 ---
 
-<script>
-  if (!import.meta.env.PUBLIC_APITOKEN) {
-    window.location.assign("/404");
-  }
-</script>
-
-<MySiteLayout>
-  <SEO {...data.fields.seo} />
-
+<MySiteLayout error={data === 401 || posts === 401} {...data?.fields?.seo}>
   {
-    sectionData.map((i) => {
+    data.fields.body.map((i) => {
       switch (i.type) {
         case "testimonials":
           return <TestimonialSection fields={i.fields} key={i.type} />;
@@ -51,5 +50,5 @@ const blogPosts = posts.data.data;
       }
     })
   }
-  <BlogSection blogPosts={blogPosts} />
+  {posts && <BlogSection blogPosts={posts} />}
 </MySiteLayout>

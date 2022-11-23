@@ -1,39 +1,29 @@
 ---
 import BlogHeader from "../../../components/BlogHeader.astro";
 import BlogPostDetail from "../../../components/BlogPostDetail.astro";
-import NotFoundSection from "../../../components/NotFoundSection";
 import MySiteLayout from "../../../layouts/MySiteLayout.astro";
 import { butterCMS } from "../../../utils/buttercmssdk";
-import SEO from "../../../pages/SEOs.astro";
 
 const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[2];
 
-const availableData = await butterCMS.post
-  .list({})
-  .then((r) => {
-    return r.data.data;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+let detail = null;
 
-const detail = availableData.filter((p) => p.slug === urlQuery)[0];
+try {
+  const detailData = await butterCMS.post.retrieve(urlQuery);
+
+  detail = detailData.data.data;
+} catch (err) {
+  detail = err?.response?.status;
+}
 ---
 
-<SEO
-  title={detail.title}
-  description={detail.meta_description}
-  image={detail.featured_image}
-/>
-
-{
-  detail ? (
-    <MySiteLayout>
-      <BlogHeader title={detail.title} text={detail.title} isVisible="true" />
-      <BlogPostDetail post={detail} />
-    </MySiteLayout>
-  ) : (
-    <NotFoundSection client:load />
-  )
-}
+<MySiteLayout
+  error={detail == 401}
+  title={detail?.title}
+  description={detail?.meta_description}
+  image={detail?.featured_image}
+>
+  <BlogHeader title={detail.title} text={detail.title} isVisible="true" />
+  <BlogPostDetail post={detail} />
+</MySiteLayout>

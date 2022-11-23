@@ -4,17 +4,17 @@ import BlogPost from "../../components/BlogPost.astro";
 import MySiteLayout from "../../layouts/MySiteLayout.astro";
 import { butterCMS } from "../../utils/buttercmssdk";
 
-const availableData = await butterCMS.post
-  .list({})
-  .then((r) => {
-    return r.data.data;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+let availableData = null;
+
+try {
+  const categoryData = await butterCMS.post.list({});
+  availableData = categoryData.data.data;
+} catch (err) {
+  availableData = err?.response?.status;
+}
 ---
 
-<MySiteLayout>
+<MySiteLayout error={availableData === 401}>
   <BlogHeader title="All Blog Posts" text="All blog posts" />
   <BlogPost data={availableData} />
 </MySiteLayout>

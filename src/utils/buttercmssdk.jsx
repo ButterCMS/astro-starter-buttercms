@@ -9,11 +9,12 @@ try {
   );
 
   butterCMS = Butter(import.meta.env.PUBLIC_APITOKEN, butterCmsPreview);
-  if (typeof window !== "undefined" && !import.meta.env.PUBLIC_APITOKEN) {
+
+  if (typeof window !== "undefined" && import.meta.env.PUBLIC_APITOKEN) {
     window.location.assign("/")
   }
 } catch (error) {
-  if (typeof window !== "undefined" && !!import.meta.env.PUBLIC_APITOKEN) {
+  if (typeof window !== "undefined" && !import.meta.env.PUBLIC_APITOKEN) {
     window.location.assign("/404");
   }
 }
