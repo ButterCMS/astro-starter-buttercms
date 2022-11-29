@@ -34,8 +34,8 @@ const { title, error, description, image } = Astro.props;
 
     <body>
         {
-            !import.meta.env.PUBLIC_APITOKEN ||
-            import.meta.env.PUBLIC_APITOKEN.length === 0 ? (
+            !import.meta.env.ASTRO_APP_BUTTER_CMS_API_KEY ||
+            import.meta.env.ASTRO_APP_BUTTER_CMS_API_KEY.length === 0 ? (
                 <NoApiTokenSection client:load />
             ) : error ? (
                 <NotFoundSection error={error} />
