@@ -2,10 +2,10 @@
 import Hero from "../components/Hero.astro";
 import Cta from "../components/Cta.astro";
 import FeatureSection from "../components/FeatureSection.astro";
-import TestimonialSection from "../components/TestimonialSection.astro";
 import BlogSection from "../components/BlogSection.astro";
 import MySiteLayout from "../layouts/MySiteLayout.astro";
 import { butterCMS } from "../utils/buttercmssdk";
+import TestimonialSection from "../components/TestimonialSection";
 
 const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[2];
@@ -38,7 +38,7 @@ try {
     data.fields.body.map((i) => {
       switch (i.type) {
         case "testimonials":
-          return <TestimonialSection fields={i.fields} key={i.type} />;
+          return <TestimonialSection client:load fields={i.fields} key={i.type} />;
         case "hero":
           return <Hero fields={i.fields} key={i.type} />;
         case "two_column_with_image":
