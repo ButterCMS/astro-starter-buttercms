@@ -18,3 +18,7 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+#lockfiles - can be reenabled by user
+packagelock.json
+yarn.lock
