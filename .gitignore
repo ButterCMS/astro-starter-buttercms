@@ -20,5 +20,5 @@ pnpm-debug.log*
 .DS_Store
 
 #lockfiles - can be reenabled by user
-packagelock.json
+package-lock.json
 yarn.lock
