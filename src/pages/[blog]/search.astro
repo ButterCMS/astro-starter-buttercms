@@ -41,7 +41,7 @@ try {
             <ul class="breadcrumb-nav">
               <li><a href="/">Home</a></li>
               <li>
-                <a href="/blog">Blog</a>
+                <a href="/blog/">Blog</a>
               </li>
               <li>Search: {params.q}</li>
             </ul>
@@ -69,7 +69,7 @@ try {
                           <div class="blog-roll-card">
                             <div class="blog-roll-card-meta">
                               <h2 class="blog-roll-card-header">
-                                <a href="#">{post.title}</a>
+                                <a href={`/blog/${post.slug}/`}>{post.title}</a>
                               </h2>
                               <ul class="blog-roll-card-meta-info">
                                 <li>
@@ -90,15 +90,17 @@ try {
                                     {new Date(post.published).toLocaleString()}
                                   </a>
                                 </li>
-                                <li>
+                                <>
                                   {post.tags.map((tag) => {
                                     return (
-                                      <a href={`/blog/tag/${tag.slug}`}>
-                                        <i class="lni lni-tag" /> {tag.name}{" "}
-                                      </a>
+                                      <li>
+                                        <a href={`/blog/tag/${tag.slug}/`}>
+                                          <i class="lni lni-tag" /> {tag.name}
+                                        </a>{" "}
+                                      </li>
                                     );
                                   })}
-                                </li>
+                                </>
                               </ul>
                             </div>
 
@@ -116,7 +118,7 @@ try {
                             </div>
                             <div class="blog-roll-card-footer text-center">
                               <a
-                                href={`/blog/${post.slug}`}
+                                href={`/blog/${post.slug}/`}
                                 class="main-btn btn-hover"
                               >
                                 Read More
@@ -153,7 +155,7 @@ try {
                 categories.map((category) => {
                   return (
                     <li>
-                      <a href={`/blog/category/${category.slug}`}>
+                      <a href={`/blog/category/${category.slug}/`}>
                         {category.name}
                       </a>
                     </li>

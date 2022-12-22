@@ -13,7 +13,7 @@ const { blogPosts } = Astro.props;
             launch a new company blog.
           </p>
           <p>
-            <a href="blog.html" class="main-btn btn-hover mt-5"
+            <a href="blog/" class="main-btn btn-hover mt-5"
               >View All Blog Posts
             </a>
           </p>
@@ -38,12 +38,12 @@ const { blogPosts } = Astro.props;
                 )}
                 <div class="blog-body">
                   <h5 class="package-name">
-                    <a href={`/blog/${post.slug}`}>{post.title}</a>
+                    <a href={`/blog/${post.slug}/`}>{post.title}</a>
                   </h5>
                   <p>{post.summary}</p>
                 </div>
                 <div class="blog-footer">
-                  <a href={`/blog/${post.slug}`} class="main-btn btn-hover">
+                  <a href={`/blog/${post.slug}/`} class="main-btn btn-hover">
                     Read More
                   </a>
                 </div>

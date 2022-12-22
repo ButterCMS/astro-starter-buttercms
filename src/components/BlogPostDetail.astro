@@ -35,15 +35,17 @@ const { post } = Astro.props;
                         {new Date(post?.published).toLocaleString()}
                       </a>
                     </li>
-                    <li>
+                    <>
                       {post.tags?.map((tag) => {
                         return (
-                          <a href={`/blog/tag/${tag.slug}`}>
-                            <i class="lni lni-tag" /> {tag?.name}{" "}
-                          </a>
+                          <li>
+                            <a href={`/blog/tag/${tag.slug}/`}>
+                              <i class="lni lni-tag" /> {tag.name}
+                            </a>{" "}
+                          </li>
                         );
                       })}
-                    </li>
+                    </>
                   </ul>
                 </div>
                 {post?.featured_image && (

@@ -23,7 +23,7 @@ const availableCategories = categories.data.data;
         availableCategories.map((category) => {
           return (
             <li>
-              <a href={`/blog/category/${category.slug}`}>{category.name}</a>
+              <a href={`/blog/category/${category.slug}/`}>{category.name}</a>
             </li>
           );
         })
