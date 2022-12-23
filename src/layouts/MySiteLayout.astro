@@ -29,7 +29,7 @@ const { title, error, description, image } = Astro.props;
             property="og:description"
             content={description}
         />
-        <meta name='image' property="og:image" content={image} />
+        {image && <meta property="og:image" content={image} />}
     </head>
 
     <body>
