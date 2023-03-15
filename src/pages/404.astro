@@ -1,8 +1,10 @@
 ---
+import MySiteLayout from "../layouts/MySiteLayout.astro";
 import NotFoundSection from "../components/NotFoundSection.astro";
-import "../css/bootstrap.min.css";
 import "../css/lineicons.css";
 import "../css/main.css";
 ---
 
-<NotFoundSection />
+<MySiteLayout title="404 Not Found">
+    <NotFoundSection />
+</MySiteLayout>
