@@ -11,20 +11,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^2.0.1",
-    "@astrojs/react": "^1.2.1",
-    "@astrojs/vercel": "^2.3.1",
-    "@popperjs/core": "^2.11.6",
-    "@types/react": "^18.0.22",
-    "astro": "^1.6.10",
-    "astro-seo-metadata": "^0.5.2",
-    "buttercms": "^1.2.9",
+    "@astrojs/node": "^5.3.2",
+    "@astrojs/react": "^2.2.1",
+    "@astrojs/vercel": "^3.8.0",
+    "@popperjs/core": "^2.11.8",
+    "astro": "^2.10.4",
+    "astro-seo-metadata": "^0.6.0",
+    "buttercms": "^1.2.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tiny-slider": "^2.9.4"
   },
   "devDependencies": {
-    "@types/node": "^18.11.8"
+    "@types/node": "^18.11.8",
+    "@types/react": "^18.2.20"
   },
   "browserslist": {
     "production": [
