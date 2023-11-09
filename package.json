@@ -1,7 +1,7 @@
 {
   "name": "astro-starter-buttercms",
   "type": "module",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "private": true,
   "scripts": {
     "dev": "astro dev",
@@ -17,7 +17,7 @@
     "@popperjs/core": "^2.11.8",
     "astro": "^2.10.4",
     "astro-seo-metadata": "^0.6.0",
-    "buttercms": "^1.2.12",
+    "buttercms": "^1.2.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tiny-slider": "^2.9.4"
