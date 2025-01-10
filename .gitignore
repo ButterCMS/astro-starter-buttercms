@@ -23,3 +23,6 @@ pnpm-debug.log*
 #lockfiles - can be reenabled by user
 package-lock.json
 yarn.lock
+
+#astro
+.astro/
