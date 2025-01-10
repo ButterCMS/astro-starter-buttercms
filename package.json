@@ -23,7 +23,7 @@
     "tiny-slider": "^2.9.4"
   },
   "devDependencies": {
-    "@types/node": "^18.11.8",
+    "@types/node": "^22.10.5",
     "@types/react": "^19.0.4"
   },
   "browserslist": {
@@ -37,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }
