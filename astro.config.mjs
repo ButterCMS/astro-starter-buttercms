@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 // https://astro.build/config
 import react from "@astrojs/react";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel";
 
 
 // https://astro.build/config
