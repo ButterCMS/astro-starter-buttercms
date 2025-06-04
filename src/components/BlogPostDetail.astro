@@ -22,7 +22,7 @@ const { post } = Astro.props;
                     <li>
                       <a href="#">
                         <img
-                          src={post.author?.profile_image || placeholder}
+                          src={post.author?.profile_image || placeholder.src}
                           alt="#"
                         />
                         {post.author?.first_name}
