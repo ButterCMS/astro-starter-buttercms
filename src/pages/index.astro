@@ -35,7 +35,7 @@ try {
 
 <MySiteLayout error={data === 401 || posts === 401} {...data?.fields?.seo}>
   {
-    data.fields.body.map((i) => {
+    data?.fields?.body.map((i) => {
       switch (i.type) {
         case "testimonials":
           return <TestimonialSection client:load fields={i.fields} key={i.type} />;

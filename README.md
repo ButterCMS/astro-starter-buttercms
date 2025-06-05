@@ -37,7 +37,7 @@ To view the app in the browser, you'll need to run the local development server:
 $ npm run start
 ```
 
-Congratulations! Your starter project is now live at [http://localhost:3000/](http://localhost:3000/).
+Congratulations! Your starter project is now live at [http://localhost:4321/](http://localhost:3000/).
 
 ## 4. Deploy on Vercel
 
