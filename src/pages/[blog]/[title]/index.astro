@@ -24,6 +24,10 @@ try {
   description={detail?.meta_description}
   image={detail?.featured_image}
 >
-  <BlogHeader title={detail.title} text={detail.title} isVisible="true" />
-  <BlogPostDetail post={detail} />
+  {detail && typeof detail === 'object' && (
+    <>
+      <BlogHeader title={detail.title} text={detail.title} isVisible="true" />
+      <BlogPostDetail post={detail} />
+    </>
+  )}
 </MySiteLayout>
